@@ -1,0 +1,25 @@
+<h1>LogBook</h1>
+
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+
+<%= form_tag({action: :upload}, multipart: true) do %>
+    <%= file_field_tag 'file' %>
+    <%= submit_tag 'Upload' %>
+<% end %>
+
+
+<h3>Logs</h3>
+<% if @result_set.blank? %>
+    <h4>No inferences available in system.</h4>
+<% else %>
+    <table style="width: 100%">
+      <% @result_set.each do |inference| %>
+          <tr>
+            <td><%= readable_inference(room: inference[0], visitors: inference[1], average_duration: inference[2]) %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+
